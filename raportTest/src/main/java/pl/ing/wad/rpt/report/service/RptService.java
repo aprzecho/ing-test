@@ -39,7 +39,7 @@ public class RptService extends ReportBaseDAO {
 				dao.markReport(conn, i, ReportStatus.IN_PROGRESS);
 				Pair<String[], List<String[]>> repData = dao.executeReport(
 						conn, i.getReportSql());
-				conn.commit();
+				conn.commit(); 
 
 				// save to file & fileNet
 				RptWorker worker = new RptWorker();
@@ -48,15 +48,15 @@ public class RptService extends ReportBaseDAO {
 				String documentId = worker.saveToFilNet(filePath);
 
 				dao.markReport(conn, i, documentId, ReportStatus.DONE);
+				conn.commit();
 			}
 
 		} catch (SQLException e) {
 			rollbackSilently(conn);
-			dao.markReportSilently(conn, request, ReportStatus.ERROR);
+			dao.markReportSilentlyAndCommit(conn, request, ReportStatus.ERROR);
 			throw e;
 		} catch (IOException e) {
-			rollbackSilently(conn);
-			dao.markReportSilently(conn, request, ReportStatus.ERROR);
+			dao.markReportSilentlyAndCommit(conn, request, ReportStatus.ERROR);
 			throw e;
 		} finally {
 			closeConnectionSilently(conn);

@@ -50,7 +50,6 @@ public class ReportServiceDAO {
 		pstmt.setInt(1, status.getOpCode());
 		pstmt.setInt(2, request.getOrderId());
 		pstmt.executeUpdate();
-		conn.commit();
 		pstmt.close();
 	}
 
@@ -63,16 +62,16 @@ public class ReportServiceDAO {
 		pstmt.setString(2, documentId);
 		pstmt.setInt(3, request.getOrderId());
 		pstmt.executeUpdate();
-		conn.commit();
 		pstmt.close();
 	}
 
-	public void markReportSilently(Connection conn, ReportRequest request,
+	public void markReportSilentlyAndCommit(Connection conn, ReportRequest request,
 			ReportStatus status) {
 
 		if (request != null) {
 			try {
 				markReport(conn, request, status);
+				conn.commit(); 
 			} catch (SQLException e) {
 				log.warn(
 						"Request couldn't be set as error: "

@@ -30,7 +30,7 @@ SET FILES NIO TRUE
 SET FILES NIO SIZE 256
 SET FILES LOG TRUE
 SET FILES LOG SIZE 50
-CREATE USER SA PASSWORD 'sa'
+CREATE USER SA PASSWORD DIGEST 'c12e01f2a13ff5587e1e9e4aedb8242d'
 ALTER USER SA SET LOCAL TRUE
 CREATE SCHEMA PUBLIC AUTHORIZATION DBA
 SET SCHEMA PUBLIC
@@ -49,7 +49,7 @@ SET SCHEMA SYSTEM_LOBS
 INSERT INTO BLOCKS VALUES(0,2147483647,0)
 SET SCHEMA PUBLIC
 INSERT INTO RPT_PARAMETERS VALUES('JaasFilePath','puste')
-INSERT INTO RPT_PARAMETERS VALUES('REPORT_OUT_FOLDER','C:\raporty\')
+INSERT INTO RPT_PARAMETERS VALUES('REPORT_OUT_FOLDER','../raporty/')
 INSERT INTO PRAC VALUES(1,'Kowalski                                                                                            ','0000000000')
 INSERT INTO PRAC VALUES(1,'Nowak                                                                                               ','0000000001')
 INSERT INTO PRAC VALUES(1,'Niewiadomski                                                                                        ','0000000002')

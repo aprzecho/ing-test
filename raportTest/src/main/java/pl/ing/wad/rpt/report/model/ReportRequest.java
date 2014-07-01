@@ -7,12 +7,14 @@ package pl.ing.wad.rpt.report.model;
  */
 public class ReportRequest {
 
-	private String orderId;
+	private Integer orderId;
 	private String reportSql;
 	private String header;
 	private String generator;
-		
-	private ReportRequest(String orderId, String reportSql, String header,
+	
+	public ReportRequest() {};
+	
+	public ReportRequest(Integer orderId, String reportSql, String header,
 			String generator) {
 		super();
 		this.orderId = orderId;
@@ -21,10 +23,10 @@ public class ReportRequest {
 		this.generator = generator;
 	}
 	
-	public String getOrderId() {
+	public Integer getOrderId() {
 		return orderId;
 	}
-	public void setOrderId(String orderId) {
+	public void setOrderId(Integer orderId) {
 		this.orderId = orderId;
 	}
 	public String getReportSql() {

@@ -32,12 +32,12 @@ public class ReportServiceDAO {
 	public List<ReportRequest> getReportRequests(Connection conn)
 			throws SQLException {
 
-		String query = "SELECT ORD_QUERY_LONG AS reportSql, ORD_ID AS orderId, ORD_HEADER as header, ORD_GENERATOR as generator FROM RPT_ORDERED where ORD_OST_ID = ?";
+		String query = "SELECT ORD_QUERY AS reportSql, ORD_ID AS orderId, ORD_HEADER as header, ORD_GENERATOR as generator FROM RPT_ORDERED where ORD_OST_ID = ?";
 
 		QueryRunner run = new QueryRunner();
 		ResultSetHandler<List<ReportRequest>> h = new BeanListHandler<ReportRequest>(
 				ReportRequest.class);
-		List<ReportRequest> requests = run.query(conn, query, h, "1");
+		List<ReportRequest> requests = run.query(conn, query, h, 1);
 
 		return requests;
 	}
@@ -47,9 +47,10 @@ public class ReportServiceDAO {
 
 		PreparedStatement pstmt = conn
 				.prepareStatement("update RPT_ORDERED SET ORD_OST_ID = ? WHERE ORD_ID = ?");
-		pstmt.setString(1, status.getOpCode());
-		pstmt.setString(2, request.getOrderId());
+		pstmt.setInt(1, status.getOpCode());
+		pstmt.setInt(2, request.getOrderId());
 		pstmt.executeUpdate();
+		conn.commit();
 		pstmt.close();
 	}
 
@@ -58,10 +59,11 @@ public class ReportServiceDAO {
 
 		PreparedStatement pstmt = conn
 				.prepareStatement("update RPT_ORDERED SET ORD_OST_ID = ?, ORD_RESULT_PATH = ? WHERE ORD_ID = ?");
-		pstmt.setString(1, status.getOpCode());
+		pstmt.setInt(1, status.getOpCode());
 		pstmt.setString(2, documentId);
-		pstmt.setString(3, request.getOrderId());
+		pstmt.setInt(3, request.getOrderId());
 		pstmt.executeUpdate();
+		conn.commit();
 		pstmt.close();
 	}
 
@@ -71,7 +73,6 @@ public class ReportServiceDAO {
 		if (request != null) {
 			try {
 				markReport(conn, request, status);
-				conn.commit();
 			} catch (SQLException e) {
 				log.warn(
 						"Request couldn't be set as error: "
@@ -94,12 +95,12 @@ public class ReportServiceDAO {
 				String[] row = new String[cols];
 				String[] labels = new String[cols];
 
-				for (int i = 1; i < cols; i++) {
-					labels[i] = meta.getColumnName(i);
+				for (int i = 0; i < cols; i++) {
+					labels[i] = meta.getColumnName(i + 1);
 				}
 
 				while (rs.next()) {
-					for (int i = 0; i < cols; i++) {
+					for (int i = 1; i < cols; i++) {
 						row[i] = DbDataTools.extractValue(
 								meta.getColumnType(i), rs, i);
 					}

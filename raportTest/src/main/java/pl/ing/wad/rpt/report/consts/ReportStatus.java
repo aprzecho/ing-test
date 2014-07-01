@@ -7,15 +7,15 @@ package pl.ing.wad.rpt.report.consts;
  */
 public enum ReportStatus {
 
-	TODO("1"), DONE("2"), ERROR("3"), IN_PROGRESS("4");
+	TODO(1), DONE(2), ERROR(3), IN_PROGRESS(4);
 
-	private String opCode;
+	private Integer opCode;
 
-	private ReportStatus(String opCode) {
+	private ReportStatus(Integer opCode) {
 		this.opCode = opCode;
 	}
 
-	public String getOpCode() {
+	public Integer getOpCode() {
 		return opCode;
 	}
 }

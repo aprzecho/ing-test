@@ -1,11 +1,11 @@
-2014-07-01 03:09:00,120 INFO  - Config file not specified, using default filename.
-2014-07-01 03:09:00,121 INFO  - Loading configuration with file: configrpt.xml
-2014-07-01 03:09:00,149 INFO  - Configuration from file configrpt.xml loaded.
-2014-07-01 03:09:00,149 INFO  - ReportConfigsFile [connectionString=jdbc:hsqldb:bazka/baza, user=SA]
-2014-07-01 03:09:00,513 INFO  - checkpointClose start
-2014-07-01 03:09:00,539 INFO  - checkpointClose end
-2014-07-01 03:09:00,565 INFO  - Config from DB loaded: {JaasFilePath=puste, REPORT_OUT_FOLDER=C:\raporty\}
-2014-07-01 03:09:00,565 INFO  - Configuration loaded successfully.
-2014-07-01 03:09:00,566 INFO  - Startuje serwis batchowy kasowania raportow RPT
-2014-07-01 03:09:00,572 INFO  - Startuje serwis batchowy raportow RPT
-2014-07-01 03:09:00,581 INFO  - Serwis batchowy raportow RPT zatrzymany...CU later :]
+2014-07-01 16:09:09,495 INFO  - Config file not specified, using default filename.
+2014-07-01 16:09:09,496 INFO  - Loading configuration with file: configrpt.xml
+2014-07-01 16:09:09,524 INFO  - Configuration from file configrpt.xml loaded.
+2014-07-01 16:09:09,524 INFO  - ReportConfigsFile [connectionString=jdbc:hsqldb:../bazka/baza, user=SA]
+2014-07-01 16:09:09,887 INFO  - checkpointClose start
+2014-07-01 16:09:09,912 INFO  - checkpointClose end
+2014-07-01 16:09:09,938 INFO  - Config from DB loaded: {JaasFilePath=puste, REPORT_OUT_FOLDER=../raporty/}
+2014-07-01 16:09:09,938 INFO  - Configuration loaded successfully.
+2014-07-01 16:09:09,938 INFO  - Startuje serwis batchowy kasowania raportow RPT
+2014-07-01 16:09:09,945 INFO  - Startuje serwis batchowy raportow RPT
+2014-07-01 16:09:09,955 INFO  - Serwis batchowy raportow RPT zatrzymany...CU later :]

@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Main>
-    <dburl>jdbc:hsqldb:bazka/baza</dburl>
+    <dburl>jdbc:hsqldb:../bazka/baza</dburl>
 	<user>SA</user>
 	<pass>sa</pass>
 </Main>

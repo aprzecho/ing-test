@@ -25,7 +25,7 @@ public class FileNetCommunication implements IFileNetCommunication {
 	}
 	
 	public String createDocument(String pathToSystemFile) {
-		return null;
+		return "doc1";
 		//TODO implement
 	}	
 }

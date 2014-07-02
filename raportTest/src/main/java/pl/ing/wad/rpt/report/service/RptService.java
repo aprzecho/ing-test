@@ -24,6 +24,8 @@ public class RptService extends ReportBaseDAO {
 		Connection conn = null;
 
 		ReportServiceDAO dao = new ReportServiceDAO();
+		
+		// hold to mark potential error
 		ReportRequest request = null;
 
 		try {
@@ -35,11 +37,18 @@ public class RptService extends ReportBaseDAO {
 
 				request = i;
 
-				// mark report, grab data, commit (release db snapshot)
+				// mark report as in progress				
 				dao.markReport(conn, i, ReportStatus.IN_PROGRESS);
+				conn.commit(); 
+				
+				// runs sql, gets data into memory, closes rs & stmt
 				Pair<String[], List<String[]>> repData = dao.executeReport(
 						conn, i.getReportSql());
-				conn.commit(); 
+				
+				// (1) ends transaction before io operations
+				// (2) in case of repetable reads isolation level
+				//     no need to hold data snapshot longer
+				conn.commit();
 
 				// save to file & fileNet
 				RptWorker worker = new RptWorker();
@@ -47,15 +56,19 @@ public class RptService extends ReportBaseDAO {
 						repData.getRight(), i);
 				String documentId = worker.saveToFilNet(filePath);
 
+				// mark report as done, finishing commit
 				dao.markReport(conn, i, documentId, ReportStatus.DONE);
 				conn.commit();
 			}
 
 		} catch (SQLException e) {
+			// silent ops in order not to loose main exception
 			rollbackSilently(conn);
 			dao.markReportSilentlyAndCommit(conn, request, ReportStatus.ERROR);
 			throw e;
-		} catch (IOException e) {
+		} catch (IOException e) {			
+			// there is no transaction during io operations
+			// so no need for rollback
 			dao.markReportSilentlyAndCommit(conn, request, ReportStatus.ERROR);
 			throw e;
 		} finally {
